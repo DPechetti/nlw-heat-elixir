@@ -1,10 +1,17 @@
 defmodule HeatTagsWeb.MessagesController do
   use HeatTagsWeb, :controller
 
-  def create(conn, params) do
-    IO.inspect(params)
+  alias HeatTags.Message
+  alias HeatTags.Messages.Create
 
-    # text(conn, "Recebi a requisição")
-    conn |> text("Recebi a requisição")
+  def create(conn, params) do
+    params |> Create.call() |> handleCreate(conn)
+  end
+
+  defp handleCreate({:ok, %Message{} = message}, conn) do
+    conn |> put_status(:created) |> render("create.json", message: message)
+  end
+
+  defp handleCreate({:error, %{result: result, status: status}}, conn) do
   end
 end
