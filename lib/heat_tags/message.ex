@@ -18,6 +18,6 @@ defmodule HeatTags.Message do
     |> cast(params, @requiredParams)
     |> validate_required(@requiredParams)
     |> validate_length(:message, min: 1, max: 140)
-    |> validate_format(:email, ~r/@/)
+    |> validate_format(:email, ~r/^([\w\-]+\.)*[\w\- ]+@([\w\- ]+\.)+([\w\-]{2,3})$/)
   end
 end
